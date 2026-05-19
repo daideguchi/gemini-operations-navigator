@@ -1,0 +1,16 @@
+{
+  "product": "Gemini Operations Navigator",
+  "case_id": "CASE-CLOUD-003",
+  "billing_boundary": "local_demo_only_no_new_api_call",
+  "current_auth_cache_summary": "Vertex AI route was previously verified in ops/.ai_auth_cache.json, but promotional-credit deduction must still be confirmed before paid-looking usage is expanded.",
+  "rules": [
+    "Use low-cost model/tool path for routine retrieval and drafting.",
+    "Reserve expensive model calls for human-approved escalations only.",
+    "Stop or downgrade when projected monthly spend exceeds prototype budget.",
+    "Never click Google AI Studio prepay, buy credits, auto-reload, or payment confirmation without DD approval."
+  ],
+  "evidence": [
+    "evt-0024",
+    "evt-0025"
+  ]
+}
