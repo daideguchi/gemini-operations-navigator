@@ -12,9 +12,13 @@ Gemini + MCP for support operations with visible cost guardrails, evidence-backe
 
 https://github.com/daideguchi/gemini-operations-navigator
 
+## Live Demo
+
+https://daideguchi.github.io/gemini-operations-navigator/
+
 ## Try It Out
 
-Open these local demo files after cloning the repository:
+Open the live demo or these local demo files after cloning the repository:
 
 - `rapid-agent/prototype/gemini-operations-navigator.html`
 - `shared-agentops-engine/web/index.html`

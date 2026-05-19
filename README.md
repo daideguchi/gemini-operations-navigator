@@ -6,6 +6,8 @@ The product idea is not "let the AI do everything." It is: give Gemini action to
 
 Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
 
+Live demo: https://daideguchi.github.io/gemini-operations-navigator/
+
 ## Demo
 
 ![Gemini Operations Navigator demo](rapid-agent/media/gemini-operations-navigator-full.png)
@@ -20,6 +22,10 @@ Open locally:
 
 - `rapid-agent/prototype/gemini-operations-navigator.html`
 - `shared-agentops-engine/web/index.html`
+
+Open in browser:
+
+- https://daideguchi.github.io/gemini-operations-navigator/
 
 ## What It Shows
 
