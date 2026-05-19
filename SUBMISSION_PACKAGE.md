@@ -24,6 +24,19 @@ Open these local demo files after cloning the repository:
 - `rapid-agent/media/gemini-operations-navigator-full.png`
 - `shared-agentops-engine/media/shared-dashboard-full.png`
 
+## Demo Video
+
+Draft silent video:
+
+- `rapid-agent/media/gemini-operations-navigator-demo-draft.mp4`
+
+Regenerate:
+
+```bash
+cd rapid-agent
+bash scripts/build_demo_video.sh
+```
+
 ## Inspiration
 
 Gemini agents are useful when they can act with tools, but action without cost limits, evidence, and approval points is risky.
@@ -78,6 +91,7 @@ python3 scripts/verify_artifacts.py
 ```bash
 cd ../rapid-agent
 python3 scripts/build_gemini_workflow_demo.py
+bash scripts/build_demo_video.sh
 ```
 
 ## Demo Script Summary

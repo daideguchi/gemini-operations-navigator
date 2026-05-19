@@ -10,6 +10,12 @@ Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
 
 ![Gemini Operations Navigator demo](rapid-agent/media/gemini-operations-navigator-full.png)
 
+Draft demo video:
+
+```text
+rapid-agent/media/gemini-operations-navigator-demo-draft.mp4
+```
+
 Open locally:
 
 - `rapid-agent/prototype/gemini-operations-navigator.html`
@@ -34,6 +40,7 @@ python3 scripts/verify_artifacts.py
 ```bash
 cd ../rapid-agent
 python3 scripts/build_gemini_workflow_demo.py
+bash scripts/build_demo_video.sh
 ```
 
 Expected proof:
