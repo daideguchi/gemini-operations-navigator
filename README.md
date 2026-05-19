@@ -4,6 +4,8 @@ Gemini Operations Navigator is a cost-aware, approval-first agent workflow for t
 
 The product idea is not "let the AI do everything." It is: give Gemini action tools, MCP context, cost limits, and human checkpoints so operational work can move faster without becoming opaque.
 
+Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
+
 ## Demo
 
 ![Gemini Operations Navigator demo](rapid-agent/media/gemini-operations-navigator-full.png)
