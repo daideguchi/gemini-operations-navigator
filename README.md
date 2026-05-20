@@ -4,9 +4,13 @@ Gemini + MCP for support operations with visible cost guardrails, evidence-backe
 
 Live demo: https://daideguchi.github.io/gemini-operations-navigator/
 
+YouTube demo: https://www.youtube.com/watch?v=kt34TmPsT4g
+
 Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
 
 Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
+
+Devpost field copy: [rapid-agent/submission/devpost-submit-manual.md](rapid-agent/submission/devpost-submit-manual.md)
 
 ## Judge Quick Read
 
@@ -29,6 +33,7 @@ Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 Demo video:
 
 ```text
+https://www.youtube.com/watch?v=kt34TmPsT4g
 rapid-agent/media/gemini-operations-navigator-demo.mp4
 ```
 

@@ -12,9 +12,14 @@ Gemini + MCP for support operations with visible cost guardrails, evidence-backe
 
 - Repository: https://github.com/daideguchi/gemini-operations-navigator
 - Live demo: https://daideguchi.github.io/gemini-operations-navigator/
+- YouTube demo: https://www.youtube.com/watch?v=kt34TmPsT4g
 - Architecture: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/ARCHITECTURE.md
 
 ## Demo Video
+
+YouTube demo:
+
+- https://www.youtube.com/watch?v=kt34TmPsT4g
 
 Final local demo video:
 
@@ -88,3 +93,7 @@ This is not just "Gemini answers a question." It is an operations workflow where
 ## Claim Boundary
 
 This is a local verified workflow prototype. It does not claim live Google Cloud deployment, final promotional-credit accounting, or unsupervised customer-facing action.
+
+## Devpost Field Copy
+
+- `rapid-agent/submission/devpost-submit-manual.md`

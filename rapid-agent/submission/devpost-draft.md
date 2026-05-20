@@ -48,6 +48,8 @@ video_seconds=72.8
 claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```
 
+YouTube demo: https://www.youtube.com/watch?v=kt34TmPsT4g
+
 ## Claim Boundary
 
 This is a verified local workflow prototype. It does not claim live Google Cloud deployment, final promotional-credit accounting, or unsupervised customer-facing action.
