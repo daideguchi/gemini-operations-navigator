@@ -278,6 +278,7 @@
     <section class="metrics">
       <div class="metric"><strong>7</strong><span>workflow events</span></div>
       <div class="metric"><strong>3</strong><span>MCP tools in the plan</span></div>
+      <div class="metric"><strong>4</strong><span>Arize/OpenInference spans</span></div>
       <div class="metric"><strong>1</strong><span>cost/risk guardrail event</span></div>
       <div class="metric"><strong>$4.84</strong><span>sample estimated spend</span></div>
     </section>
@@ -340,6 +341,53 @@
           <td>gemini-ops-navigator</td>
           <td>$4.820</td>
           <td>Projected monthly model spend exceeded the manager&#x27;s prototype budget.</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Arize / OpenInference Trace</h2>
+      <p>Every tool step exports a span with the tool name, evidence ID, cost estimate, and approval boundary so judges can inspect the agent's operational behavior.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Span</th>
+            <th>Tool</th>
+            <th>Evidence</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>CASE-CLOUD-003-span-01</td>
+          <td>policy_mcp.retrieve_refund_policy</td>
+          <td>kb-refund-2026-05</td>
+          <td>$0.001</td>
+        </tr>
+        
+
+        <tr>
+          <td>CASE-CLOUD-003-span-02</td>
+          <td>billing_mcp.check_recent_usage</td>
+          <td>usage-sup-1042</td>
+          <td>$0.002</td>
+        </tr>
+        
+
+        <tr>
+          <td>CASE-CLOUD-003-span-03</td>
+          <td>gemini.generate_grounded_draft</td>
+          <td>draft-sup-1042</td>
+          <td>$0.018</td>
+        </tr>
+        
+
+        <tr>
+          <td>CASE-CLOUD-003-span-04</td>
+          <td>gmail_mcp.send_customer_reply</td>
+          <td>approval-gate-sup-1042</td>
+          <td>$0.000</td>
         </tr>
         </tbody>
       </table>

@@ -14,6 +14,7 @@ SHARED_ROOT = ROOT.parent / "shared-agentops-engine"
 WORKFLOW_FILE = SHARED_ROOT / "adapters" / "google" / "gemini_mcp_workflow.json"
 OUT_FILE = ROOT / "prototype" / "gemini-operations-navigator.html"
 POLICY_FILE = ROOT / "reports" / "cost-guardrail-policy.json"
+OPENINFERENCE_FILE = ROOT / "reports" / "openinference-trace.jsonl"
 
 
 def esc(value: Any) -> str:
@@ -83,8 +84,33 @@ def build_cost_rows(events: list[dict[str, Any]]) -> str:
     )
 
 
+def load_openinference_spans() -> list[dict[str, Any]]:
+    if not OPENINFERENCE_FILE.exists():
+        return []
+    return [
+        json.loads(line)
+        for line in OPENINFERENCE_FILE.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
+def build_span_rows(spans: list[dict[str, Any]]) -> str:
+    return "\n".join(
+        f"""
+        <tr>
+          <td>{esc(span["span_id"])}</td>
+          <td>{esc(span["name"])}</td>
+          <td>{esc(span["attributes"].get("evidence.id", ""))}</td>
+          <td>${float(span["attributes"].get("cost.usd.estimate", 0)):.3f}</td>
+        </tr>
+        """
+        for span in spans
+    )
+
+
 def build_html(workflow: dict[str, Any]) -> str:
     events = workflow["events"]
+    spans = load_openinference_spans()
     total_cost = sum(float(event.get("cost_usd_estimate", 0) or 0) for event in events)
     approval_count = len(workflow["human_control_points"])
     mcp_count = len(workflow["mcp_tools"])
@@ -92,6 +118,7 @@ def build_html(workflow: dict[str, Any]) -> str:
     tool_cards = build_tool_cards(workflow)
     event_rows = build_event_rows(events)
     cost_rows = build_cost_rows(events)
+    span_rows = build_span_rows(spans)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -373,6 +400,7 @@ def build_html(workflow: dict[str, Any]) -> str:
     <section class="metrics">
       <div class="metric"><strong>{len(events)}</strong><span>workflow events</span></div>
       <div class="metric"><strong>{mcp_count}</strong><span>MCP tools in the plan</span></div>
+      <div class="metric"><strong>{len(spans)}</strong><span>Arize/OpenInference spans</span></div>
       <div class="metric"><strong>{risk_count}</strong><span>cost/risk guardrail event</span></div>
       <div class="metric"><strong>${total_cost:.2f}</strong><span>sample estimated spend</span></div>
     </section>
@@ -394,6 +422,22 @@ def build_html(workflow: dict[str, Any]) -> str:
           </tr>
         </thead>
         <tbody>{cost_rows}</tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>Arize / OpenInference Trace</h2>
+      <p>Every tool step exports a span with the tool name, evidence ID, cost estimate, and approval boundary so judges can inspect the agent's operational behavior.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Span</th>
+            <th>Tool</th>
+            <th>Evidence</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>{span_rows}</tbody>
       </table>
     </section>
 

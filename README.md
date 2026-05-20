@@ -18,9 +18,9 @@ Devpost field copy: [rapid-agent/submission/devpost-submit-manual.md](rapid-agen
 
 **What problem does it solve?** Gemini can retrieve, draft, and act, but a support agent becomes risky when tool calls, spend, evidence, and customer-facing actions are hidden.
 
-**How does it solve it?** The workflow runs MCP-style policy, billing, and ticket tools, creates a grounded draft, records projected cost, and blocks the customer reply until a human manager approves it.
+**How does it solve it?** The workflow runs MCP-style policy, billing, and ticket tools, creates a grounded draft, records projected cost, exports an Arize/OpenInference-compatible trace, and blocks the customer reply until a human manager approves it.
 
-**What is verified?** A local terminal run, MCP tool trace, cost ledger, approval checkpoint, workflow UI, architecture diagram, narrated demo video, and public GitHub Pages review hub.
+**What is verified?** A local terminal run, MCP tool trace, Arize/OpenInference-compatible span trace, cost ledger, approval checkpoint, workflow UI, architecture diagram, narrated demo video, and public GitHub Pages review hub.
 
 ## Demo
 
@@ -58,6 +58,8 @@ mcp_tool_calls=4
 projected_cost_usd=0.021
 cost_within_budget=True
 human_approval_required=true
+openinference_spans=4
+partner_track=Arize
 claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```
 
@@ -66,6 +68,7 @@ claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 - MCP-style tool calls for policy, usage, draft, and customer reply.
 - A grounded reply that cites evidence instead of promising a refund.
 - A cost ledger that keeps projected spend visible.
+- An Arize/OpenInference-compatible trace for every tool step, evidence ID, cost estimate, and approval boundary.
 - A high-risk customer-facing send blocked until manager approval.
 - A submission boundary that avoids claiming live Google Cloud deployment before verification.
 
@@ -74,6 +77,7 @@ claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 - `rapid-agent/case_data/` - support ticket, policy excerpt, and tool catalog.
 - `rapid-agent/scripts/run_gemini_ops_agent.py` - terminal workflow.
 - `rapid-agent/reports/mcp-tool-trace.jsonl` - replayable tool trace.
+- `rapid-agent/reports/openinference-trace.jsonl` - Arize/OpenInference-compatible span trace.
 - `rapid-agent/reports/cost-ledger.json` - budget and projected cost.
 - `rapid-agent/reports/approval-checkpoint.md` - human approval packet.
 - `rapid-agent/prototype/terminal-session.html` - terminal proof page.

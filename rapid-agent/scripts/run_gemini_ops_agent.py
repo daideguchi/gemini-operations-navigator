@@ -69,7 +69,9 @@ def build_run() -> dict:
         "case_id": ticket["case_id"],
         "ticket_id": ticket["ticket_id"],
         "model_route": "Gemini/Vertex-ready local demo",
-        "partner_pattern": "MCP-style policy, billing, ticket, and action tools",
+        "partner_pattern": "MCP-style policy, billing, ticket, and action tools with Arize/OpenInference-compatible trace export",
+        "partner_track": "Arize",
+        "observability_route": "OpenInference-compatible JSONL trace for tool calls, cost, evidence, and approval boundary",
         "budget_usd": budget,
         "projected_cost_usd": total_cost,
         "cost_within_budget": total_cost <= budget,
@@ -82,6 +84,37 @@ def build_run() -> dict:
         "claim_boundary": "verified_local_mcp_workflow_no_live_google_deployment_claim",
     }
     return run
+
+
+def openinference_spans(run: dict) -> list[dict]:
+    spans: list[dict] = []
+    for row in run["tool_trace"]:
+        step = int(row["step"])
+        spans.append(
+            {
+                "trace_id": f"{run['case_id']}-trace",
+                "span_id": f"{run['case_id']}-span-{step:02d}",
+                "parent_span_id": None,
+                "name": row["tool"],
+                "span_kind": "TOOL",
+                "start_time": f"2026-05-20T00:00:{step * 5:02d}Z",
+                "end_time": f"2026-05-20T00:00:{step * 5 + 2:02d}Z",
+                "status": row["status"],
+                "attributes": {
+                    "openinference.span.kind": "TOOL",
+                    "input.value": run["ticket_id"],
+                    "output.value": row.get("result", row["status"]),
+                    "tool.name": row["tool"],
+                    "tool.step": step,
+                    "evidence.id": row["evidence_id"],
+                    "cost.usd.estimate": row["cost_usd_estimate"],
+                    "approval.required": row["status"] == "blocked_pending_human_approval",
+                    "human_approval_required": run["human_approval_required"],
+                    "projected_cost_usd": run["projected_cost_usd"],
+                },
+            }
+        )
+    return spans
 
 
 def terminal_lines(run: dict) -> list[str]:
@@ -135,6 +168,10 @@ def write_reports(run: dict, lines: list[str]) -> None:
     (REPORT_DIR / "agent-run.json").write_text(json.dumps(run, indent=2) + "\n", encoding="utf-8")
     (REPORT_DIR / "mcp-tool-trace.jsonl").write_text(
         "\n".join(json.dumps(row, sort_keys=True) for row in run["tool_trace"]) + "\n",
+        encoding="utf-8",
+    )
+    (REPORT_DIR / "openinference-trace.jsonl").write_text(
+        "\n".join(json.dumps(row, sort_keys=True) for row in openinference_spans(run)) + "\n",
         encoding="utf-8",
     )
     (REPORT_DIR / "cost-ledger.json").write_text(

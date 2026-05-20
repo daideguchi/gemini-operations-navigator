@@ -22,6 +22,7 @@ root = Path("rapid-agent")
 required = [
     root / "reports" / "agent-run.json",
     root / "reports" / "mcp-tool-trace.jsonl",
+    root / "reports" / "openinference-trace.jsonl",
     root / "reports" / "cost-ledger.json",
     root / "reports" / "approval-checkpoint.md",
     root / "reports" / "terminal-transcript.txt",
@@ -40,6 +41,24 @@ if not run["human_approval_required"]:
     raise SystemExit("approval gate missing")
 if run["tool_trace"][-1]["status"] != "blocked_pending_human_approval":
     raise SystemExit("customer-facing send was not blocked")
+if run.get("partner_track") != "Arize":
+    raise SystemExit("Arize partner track marker missing")
+
+spans = [
+    json.loads(line)
+    for line in (root / "reports" / "openinference-trace.jsonl").read_text().splitlines()
+    if line.strip()
+]
+if len(spans) != len(run["tool_trace"]):
+    raise SystemExit("OpenInference span count does not match tool trace")
+for span in spans:
+    attrs = span.get("attributes", {})
+    if attrs.get("openinference.span.kind") != "TOOL":
+        raise SystemExit("OpenInference span kind missing")
+    if not attrs.get("evidence.id"):
+        raise SystemExit("OpenInference span missing evidence id")
+    if "cost.usd.estimate" not in attrs:
+        raise SystemExit("OpenInference span missing cost estimate")
 
 transcript = (root / "reports" / "terminal-transcript.txt").read_text()
 for needle in ["projected=$0.021", "blocked until support manager approval", "no live Google Cloud deployment claimed"]:
@@ -65,6 +84,8 @@ print(f"mcp_tool_calls={len(run['tool_trace'])}")
 print(f"projected_cost_usd={run['projected_cost_usd']}")
 print(f"cost_within_budget={run['cost_within_budget']}")
 print("human_approval_required=true")
+print(f"openinference_spans={len(spans)}")
+print("partner_track=Arize")
 print(f"video_seconds={duration:.1f}")
 print("claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim")
 PY

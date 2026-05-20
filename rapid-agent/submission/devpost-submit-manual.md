@@ -10,6 +10,7 @@ Use this if Devpost automation hits reCAPTCHA.
 - Submission package: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/SUBMISSION_PACKAGE.md
 - Architecture: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/ARCHITECTURE.md
 - Terminal proof: https://daideguchi.github.io/gemini-operations-navigator/rapid-agent/prototype/terminal-session.html
+- Arize/OpenInference trace: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/rapid-agent/reports/openinference-trace.jsonl
 
 ## Project Name
 
@@ -36,11 +37,12 @@ Gemini Operations Navigator was built around that idea: do not hide the operatio
 ```text
 Gemini Operations Navigator runs a local support-operations workflow.
 
-A customer asks for a renewal refund. The agent retrieves the refund policy through an MCP-style tool, checks recent usage, drafts a grounded response, records projected cost, and blocks the customer-facing send until a manager approves it.
+A customer asks for a renewal refund. The agent retrieves the refund policy through an MCP-style tool, checks recent usage, drafts a grounded response, records projected cost, exports an Arize/OpenInference-compatible span trace, and blocks the customer-facing send until a manager approves it.
 
 The demo produces:
 - terminal transcript
 - MCP tool trace
+- Arize/OpenInference-compatible span trace
 - cost ledger
 - approval checkpoint
 - workflow UI
@@ -51,7 +53,7 @@ The demo produces:
 ## Built With
 
 ```text
-Python, HTML, CSS, JSON, JSONL, MCP-style tool model, ImageMagick, ffmpeg, Edge TTS
+Python, HTML, CSS, JSON, JSONL, Gemini-oriented workflow design, MCP-style tool model, Arize/OpenInference-compatible trace export, Google Cloud / ADK-ready architecture, ImageMagick, ffmpeg, Edge TTS
 ```
 
 ## Verification Proof
@@ -62,6 +64,8 @@ mcp_tool_calls=4
 projected_cost_usd=0.021
 cost_within_budget=True
 human_approval_required=true
+openinference_spans=4
+partner_track=Arize
 video_seconds=72.8
 claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```

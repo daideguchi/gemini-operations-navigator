@@ -14,6 +14,7 @@ Gemini + MCP for support operations with visible cost guardrails, evidence-backe
 - Live demo: https://daideguchi.github.io/gemini-operations-navigator/
 - YouTube demo: https://www.youtube.com/watch?v=kt34TmPsT4g
 - Architecture: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/ARCHITECTURE.md
+- Arize/OpenInference trace: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/rapid-agent/reports/openinference-trace.jsonl
 
 ## Demo Video
 
@@ -47,6 +48,7 @@ Gemini Operations Navigator turns a customer support question into a controlled 
 - Runs MCP-style policy, billing, ticket, and action tools.
 - Drafts a grounded reply with evidence IDs.
 - Records projected tool/model cost.
+- Exports an Arize/OpenInference-compatible trace for every tool step.
 - Blocks the customer-facing send until human approval.
 - Publishes a workflow UI, terminal transcript, cost ledger, and tool trace.
 
@@ -56,6 +58,8 @@ Gemini Operations Navigator turns a customer support question into a controlled 
 - HTML/CSS
 - JSON / JSONL
 - MCP-style tool model
+- Arize/OpenInference-compatible trace export
+- Gemini / Google Cloud / ADK-ready architecture
 - ImageMagick
 - ffmpeg
 - Edge TTS neural narration
@@ -68,6 +72,8 @@ mcp_tool_calls=4
 projected_cost_usd=0.021
 cost_within_budget=True
 human_approval_required=true
+openinference_spans=4
+partner_track=Arize
 video_seconds=72.8
 claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```
@@ -82,6 +88,7 @@ bash rapid-agent/scripts/run_google_local_checks.sh
 ## Screenshots
 
 - `architecture-diagram.svg`
+- `rapid-agent/reports/openinference-trace.jsonl`
 - `rapid-agent/media/gemini-operations-navigator-full.png`
 - `rapid-agent/media/gemini-terminal-session-full.png`
 - `shared-agentops-engine/media/shared-dashboard-full.png`
