@@ -1,74 +1,87 @@
 # Gemini Operations Navigator
 
-Gemini Operations Navigator is a cost-aware, approval-first agent workflow for the Google Cloud Rapid Agent Hackathon.
-
-The product idea is not "let the AI do everything." It is: give Gemini action tools, MCP context, cost limits, and human checkpoints so operational work can move faster without becoming opaque.
-
-Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
+Gemini + MCP for support operations with visible cost guardrails, evidence-backed actions, and human approval checkpoints.
 
 Live demo: https://daideguchi.github.io/gemini-operations-navigator/
 
+Submission package: [SUBMISSION_PACKAGE.md](SUBMISSION_PACKAGE.md)
+
+Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
+
+## Judge Quick Read
+
+**Who is this for?** Support operations teams that want AI agents to help with customer-facing work.
+
+**What problem does it solve?** Gemini can retrieve, draft, and act, but a support agent becomes risky when tool calls, spend, evidence, and customer-facing actions are hidden.
+
+**How does it solve it?** The workflow runs MCP-style policy, billing, and ticket tools, creates a grounded draft, records projected cost, and blocks the customer reply until a human manager approves it.
+
+**What is verified?** A local terminal run, MCP tool trace, cost ledger, approval checkpoint, workflow UI, architecture diagram, narrated demo video, and public GitHub Pages review hub.
+
 ## Demo
+
+![Architecture diagram](architecture-diagram.svg)
 
 ![Gemini Operations Navigator demo](rapid-agent/media/gemini-operations-navigator-full.png)
 
-Draft demo video:
+![Terminal proof](rapid-agent/media/gemini-terminal-session-full.png)
+
+Demo video:
 
 ```text
-rapid-agent/media/gemini-operations-navigator-demo-draft.mp4
+rapid-agent/media/gemini-operations-navigator-demo.mp4
 ```
-
-Open locally:
-
-- `rapid-agent/prototype/gemini-operations-navigator.html`
-- `shared-agentops-engine/web/index.html`
 
 Open in browser:
 
 - https://daideguchi.github.io/gemini-operations-navigator/
-
-## What It Shows
-
-- MCP-style tool plan
-- Agent event timeline
-- Cost guardrail policy
-- Human approval checkpoint
-- Evidence-backed handoff summary
+- https://daideguchi.github.io/gemini-operations-navigator/rapid-agent/prototype/gemini-operations-navigator.html
+- https://daideguchi.github.io/gemini-operations-navigator/rapid-agent/prototype/terminal-session.html
 
 ## Run Locally
 
 ```bash
-cd shared-agentops-engine
-python3 scripts/generate_portfolio_artifacts.py
-python3 scripts/verify_artifacts.py
-```
-
-```bash
-cd ../rapid-agent
-python3 scripts/build_gemini_workflow_demo.py
-bash scripts/build_demo_video.sh
+cd /path/to/gemini-operations-navigator
+bash rapid-agent/scripts/run_google_local_checks.sh
 ```
 
 Expected proof:
 
 ```text
-verify_ok
-status: ok
+google_local_checks_ok
+mcp_tool_calls=4
+projected_cost_usd=0.021
+cost_within_budget=True
+human_approval_required=true
+claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```
 
-## Hackathon Boundary
+## What It Shows
+
+- MCP-style tool calls for policy, usage, draft, and customer reply.
+- A grounded reply that cites evidence instead of promising a refund.
+- A cost ledger that keeps projected spend visible.
+- A high-risk customer-facing send blocked until manager approval.
+- A submission boundary that avoids claiming live Google Cloud deployment before verification.
+
+## Key Files
+
+- `rapid-agent/case_data/` - support ticket, policy excerpt, and tool catalog.
+- `rapid-agent/scripts/run_gemini_ops_agent.py` - terminal workflow.
+- `rapid-agent/reports/mcp-tool-trace.jsonl` - replayable tool trace.
+- `rapid-agent/reports/cost-ledger.json` - budget and projected cost.
+- `rapid-agent/reports/approval-checkpoint.md` - human approval packet.
+- `rapid-agent/prototype/terminal-session.html` - terminal proof page.
+- `ARCHITECTURE.md` - component and data-flow explanation.
+
+## Claim Boundary
 
 Safe claim:
 
-- A local Gemini/MCP workflow prototype, cost policy, and approval model are generated.
+- A local Gemini/MCP workflow prototype runs against packaged case data and produces tool trace, cost ledger, approval checkpoint, workflow UI, and natural English demo video.
 
 Not claimed yet:
 
 - Live Google Cloud deployment.
-- New paid-looking API usage.
-- Final billing or credit behavior.
-
-## Project Layout
-
-- `rapid-agent/` - Google-focused prototype, screenshot, cost guardrail, and Devpost draft
-- `shared-agentops-engine/` - shared event stream, adapters, dashboard, and verifier
+- Final promotional-credit accounting.
+- Unsupervised customer-facing action.

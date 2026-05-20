@@ -1,0 +1,28 @@
+{
+  "tools": [
+    {
+      "name": "policy_mcp.retrieve_refund_policy",
+      "type": "mcp_tool",
+      "risk": "low",
+      "evidence_id": "kb-refund-2026-05"
+    },
+    {
+      "name": "billing_mcp.check_recent_usage",
+      "type": "mcp_tool",
+      "risk": "medium",
+      "evidence_id": "usage-sup-1042"
+    },
+    {
+      "name": "ticket_mcp.draft_manager_escalation",
+      "type": "mcp_tool",
+      "risk": "medium",
+      "evidence_id": "ticket-sup-1042"
+    },
+    {
+      "name": "gmail_mcp.send_customer_reply",
+      "type": "action_tool",
+      "risk": "high",
+      "requires_human_approval": true
+    }
+  ]
+}

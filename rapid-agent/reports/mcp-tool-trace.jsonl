@@ -1,0 +1,4 @@
+{"cost_usd_estimate": 0.001, "evidence_id": "kb-refund-2026-05", "status": "success", "step": 1, "tool": "policy_mcp.retrieve_refund_policy"}
+{"cost_usd_estimate": 0.002, "evidence_id": "usage-sup-1042", "result": "No new seats used after renewal in packaged case.", "status": "success", "step": 2, "tool": "billing_mcp.check_recent_usage"}
+{"cost_usd_estimate": 0.018, "evidence_id": "draft-sup-1042", "result": "Draft cites refund policy and avoids promising approval.", "status": "success", "step": 3, "tool": "gemini.generate_grounded_draft"}
+{"cost_usd_estimate": 0, "evidence_id": "approval-gate-sup-1042", "result": "High-risk customer-facing action blocked until manager approval.", "status": "blocked_pending_human_approval", "step": 4, "tool": "gmail_mcp.send_customer_reply"}

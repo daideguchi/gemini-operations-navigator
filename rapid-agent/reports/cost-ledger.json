@@ -1,0 +1,7 @@
+{
+  "case_id": "CASE-CLOUD-003",
+  "budget_usd": 0.05,
+  "projected_cost_usd": 0.021,
+  "cost_within_budget": true,
+  "stop_rule": "Block additional model/tool loops when projected_cost_usd exceeds budget_usd."
+}

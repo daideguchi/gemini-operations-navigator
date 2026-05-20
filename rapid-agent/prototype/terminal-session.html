@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terminal Session — Gemini Operations Navigator</title>
+  <style>
+    body { margin: 0; background: #0b1220; color: #dbeafe; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px 18px; }
+    .bar { background: #1f2937; color: #f8fafc; border: 1px solid #334155; border-radius: 8px 8px 0 0; padding: 10px 14px; font-family: Inter, system-ui, sans-serif; }
+    pre { margin: 0; background: #020617; border: 1px solid #334155; border-top: 0; border-radius: 0 0 8px 8px; padding: 18px; white-space: pre-wrap; line-height: 1.5; font-size: 14px; }
+  </style>
+</head>
+<body><main><div class="bar">CASE-CLOUD-003 · Gemini/MCP terminal run</div><pre>$ python3 rapid-agent/scripts/run_gemini_ops_agent.py --case CASE-CLOUD-003
+[case] CASE-CLOUD-003 / SUP-1042
+[mode] Gemini Operations Navigator: MCP tools + cost guardrails + human approval
+[budget] max=$0.05
+
+[tool] policy_mcp.retrieve_refund_policy: success
+       evidence: kb-refund-2026-05 cost=$0.001
+[tool] billing_mcp.check_recent_usage: success
+       evidence: usage-sup-1042 cost=$0.002
+       result: No new seats used after renewal in packaged case.
+[tool] gemini.generate_grounded_draft: success
+       evidence: draft-sup-1042 cost=$0.018
+       result: Draft cites refund policy and avoids promising approval.
+[tool] gmail_mcp.send_customer_reply: blocked_pending_human_approval
+       evidence: approval-gate-sup-1042 cost=$0.000
+       result: High-risk customer-facing action blocked until manager approval.
+
+[cost] projected=$0.021 within_budget=True
+[approval] customer-facing send is blocked until support manager approval
+[boundary] verified local MCP workflow; no live Google Cloud deployment claimed</pre></main></body>
+</html>

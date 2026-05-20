@@ -33,13 +33,15 @@
         <p>Gemini + MCP for support operations with visible cost guardrails, evidence-backed actions, and human approval checkpoints.</p>
         <div class="actions">
           <a class="button" href="rapid-agent/prototype/gemini-operations-navigator.html">Open Workflow</a>
+          <a class="button secondary" href="rapid-agent/prototype/terminal-session.html">Terminal Run</a>
+          <a class="button secondary" href="ARCHITECTURE.md">Architecture</a>
           <a class="button secondary" href="shared-agentops-engine/web/index.html">Shared Timeline</a>
           <a class="button secondary" href="SUBMISSION_PACKAGE.md">Submission Package</a>
           <a class="button secondary" href="https://github.com/daideguchi/gemini-operations-navigator">GitHub</a>
         </div>
       </div>
-      <video controls muted poster="rapid-agent/media/gemini-operations-navigator-full.png">
-        <source src="rapid-agent/media/gemini-operations-navigator-demo-draft.mp4" type="video/mp4">
+      <video controls poster="rapid-agent/media/gemini-operations-navigator-full.png">
+        <source src="rapid-agent/media/gemini-operations-navigator-demo.mp4" type="video/mp4">
       </video>
     </section>
     <section class="panel">
@@ -52,11 +54,13 @@
     </section>
     <section class="grid">
       <a href="rapid-agent/prototype/gemini-operations-navigator.html"><img src="rapid-agent/media/gemini-operations-navigator-full.png" alt="Gemini Operations Navigator screenshot"></a>
+      <a href="rapid-agent/prototype/terminal-session.html"><img src="rapid-agent/media/gemini-terminal-session-full.png" alt="Gemini terminal proof screenshot"></a>
+      <a href="architecture-diagram.svg"><img src="architecture-diagram.svg" alt="Gemini Operations Navigator architecture diagram"></a>
       <a href="shared-agentops-engine/web/index.html"><img src="shared-agentops-engine/media/shared-dashboard-full.png" alt="Shared AgentOps dashboard screenshot"></a>
     </section>
     <section class="panel">
       <h2>Verify Locally</h2>
-      <p><code>cd rapid-agent && python3 scripts/build_gemini_workflow_demo.py</code></p>
+      <p><code>bash rapid-agent/scripts/run_google_local_checks.sh</code></p>
     </section>
   </main>
 </body>

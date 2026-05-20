@@ -1,0 +1,73 @@
+{
+  "case_id": "CASE-CLOUD-003",
+  "ticket_id": "SUP-1042",
+  "model_route": "Gemini/Vertex-ready local demo",
+  "partner_pattern": "MCP-style policy, billing, ticket, and action tools",
+  "budget_usd": 0.05,
+  "projected_cost_usd": 0.021,
+  "cost_within_budget": true,
+  "tools": [
+    {
+      "name": "policy_mcp.retrieve_refund_policy",
+      "type": "mcp_tool",
+      "risk": "low",
+      "evidence_id": "kb-refund-2026-05"
+    },
+    {
+      "name": "billing_mcp.check_recent_usage",
+      "type": "mcp_tool",
+      "risk": "medium",
+      "evidence_id": "usage-sup-1042"
+    },
+    {
+      "name": "ticket_mcp.draft_manager_escalation",
+      "type": "mcp_tool",
+      "risk": "medium",
+      "evidence_id": "ticket-sup-1042"
+    },
+    {
+      "name": "gmail_mcp.send_customer_reply",
+      "type": "action_tool",
+      "risk": "high",
+      "requires_human_approval": true
+    }
+  ],
+  "tool_trace": [
+    {
+      "step": 1,
+      "tool": "policy_mcp.retrieve_refund_policy",
+      "status": "success",
+      "evidence_id": "kb-refund-2026-05",
+      "cost_usd_estimate": 0.001
+    },
+    {
+      "step": 2,
+      "tool": "billing_mcp.check_recent_usage",
+      "status": "success",
+      "evidence_id": "usage-sup-1042",
+      "cost_usd_estimate": 0.002,
+      "result": "No new seats used after renewal in packaged case."
+    },
+    {
+      "step": 3,
+      "tool": "gemini.generate_grounded_draft",
+      "status": "success",
+      "evidence_id": "draft-sup-1042",
+      "cost_usd_estimate": 0.018,
+      "result": "Draft cites refund policy and avoids promising approval."
+    },
+    {
+      "step": 4,
+      "tool": "gmail_mcp.send_customer_reply",
+      "status": "blocked_pending_human_approval",
+      "evidence_id": "approval-gate-sup-1042",
+      "cost_usd_estimate": 0,
+      "result": "High-risk customer-facing action blocked until manager approval."
+    }
+  ],
+  "grounded_draft": "I found the renewal-refund policy. Because the renewal was yesterday and the packaged usage check shows no new seats were used, this may qualify for manager review. I cannot promise the refund yet; a support manager must approve the exception first. Evidence: kb-refund-2026-05, usage-sup-1042.",
+  "policy_excerpt": "# Refund Policy Excerpt\n\nEvidence-ID: kb-refund-2026-05\n\nRenewal refunds may be approved within 48 hours when all of the following are\ntrue:\n\n- the renewal was accidental,\n- the request was opened by an account admin,\n- no new seats were used after the renewal, and\n- a support manager approves the exception.\n\nCustomer-facing replies must cite the policy source and must not promise a refund\nuntil a support manager has approved the exception.\n",
+  "human_approval_required": true,
+  "blocked_action": "gmail_mcp.send_customer_reply",
+  "claim_boundary": "verified_local_mcp_workflow_no_live_google_deployment_claim"
+}

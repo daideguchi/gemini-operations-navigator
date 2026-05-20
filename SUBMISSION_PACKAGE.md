@@ -8,129 +8,83 @@ Gemini Operations Navigator
 
 Gemini + MCP for support operations with visible cost guardrails, evidence-backed actions, and human approval checkpoints.
 
-## Repository
+## Public Links
 
-https://github.com/daideguchi/gemini-operations-navigator
-
-## Live Demo
-
-https://daideguchi.github.io/gemini-operations-navigator/
-
-## Try It Out
-
-Open the live demo or these local demo files after cloning the repository:
-
-- `rapid-agent/prototype/gemini-operations-navigator.html`
-- `shared-agentops-engine/web/index.html`
-
-## Screenshots
-
-- `rapid-agent/media/gemini-operations-navigator-full.png`
-- `shared-agentops-engine/media/shared-dashboard-full.png`
+- Repository: https://github.com/daideguchi/gemini-operations-navigator
+- Live demo: https://daideguchi.github.io/gemini-operations-navigator/
+- Architecture: https://raw.githubusercontent.com/daideguchi/gemini-operations-navigator/main/ARCHITECTURE.md
 
 ## Demo Video
 
-Draft silent video:
+Final local demo video:
+
+- `rapid-agent/media/gemini-operations-navigator-demo.mp4`
+
+Compatibility copy:
 
 - `rapid-agent/media/gemini-operations-navigator-demo-draft.mp4`
 
 Regenerate:
 
 ```bash
-cd rapid-agent
-bash scripts/build_demo_video.sh
+bash rapid-agent/scripts/build_demo_video.sh
 ```
 
-## Inspiration
+## The Simple Story
 
-Gemini agents are useful when they can act with tools, but action without cost limits, evidence, and approval points is risky.
+Gemini agents should not be mysterious operators. They should be visible coworkers.
 
-This project treats cost control and human approval as product features, not hidden backend concerns.
+Gemini Operations Navigator turns a customer support question into a controlled workflow: retrieve policy through MCP-style tools, check usage, draft a grounded answer, show projected cost, and stop before sending anything to the customer until a human manager approves it.
 
 ## What It Does
 
-Gemini Operations Navigator shows an operations workflow where an agent:
-
-- creates a support workflow plan
-- retrieves policy through an MCP-style tool
-- drafts a grounded response
-- logs cost signals
-- pauses for human approval
-- records the final handoff
-
-## How We Built It
-
-- Shared AgentOps event stream
-- Gemini/MCP workflow specification
-- Cost guardrail policy JSON
-- Local HTML workflow demo
-- Human approval checkpoint model
+- Parses a packaged support ticket.
+- Runs MCP-style policy, billing, ticket, and action tools.
+- Drafts a grounded reply with evidence IDs.
+- Records projected tool/model cost.
+- Blocks the customer-facing send until human approval.
+- Publishes a workflow UI, terminal transcript, cost ledger, and tool trace.
 
 ## Built With
 
 - Python
 - HTML/CSS
 - JSON / JSONL
-- Gemini workflow model
-- MCP-style tool plan
+- MCP-style tool model
+- ImageMagick
+- ffmpeg
+- Edge TTS neural narration
 
 ## What Is Working
 
 ```text
-verify_ok
-status: ok
-event_count=7
-mcp_tools=3
-human_control_points=1
+google_local_checks_ok
+mcp_tool_calls=4
+projected_cost_usd=0.021
+cost_within_budget=True
+human_approval_required=true
+video_seconds=72.8
+claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 ```
 
 ## Verification Commands
 
 ```bash
-cd shared-agentops-engine
-python3 scripts/generate_portfolio_artifacts.py
-python3 scripts/verify_artifacts.py
+cd /path/to/gemini-operations-navigator
+bash rapid-agent/scripts/run_google_local_checks.sh
 ```
 
-```bash
-cd ../rapid-agent
-python3 scripts/build_gemini_workflow_demo.py
-bash scripts/build_demo_video.sh
-```
+## Screenshots
 
-## Demo Script Summary
-
-1. Show the support-operations workflow.
-2. Show MCP-style policy retrieval.
-3. Show the grounded draft and cost signal.
-4. Show the human approval checkpoint.
-5. Explain how the workflow keeps agent action transparent.
+- `architecture-diagram.svg`
+- `rapid-agent/media/gemini-operations-navigator-full.png`
+- `rapid-agent/media/gemini-terminal-session-full.png`
+- `shared-agentops-engine/media/shared-dashboard-full.png`
 
 ## What Makes It Different
 
-This is not just "Gemini answers a question." It is an operations workflow where action, cost, evidence, and approval are visible.
-
-## Challenges
-
-The main challenge was respecting the cost route. The demo currently stays local and explicit about its boundary instead of triggering unverified paid-looking API use.
-
-## Accomplishments
-
-- Built a Gemini/MCP workflow demo
-- Added a cost guardrail policy
-- Added human approval control points
-- Published a clean public repository
-
-## What We Learned
-
-Agent workflows become more trustworthy when cost and approval are visible to the operator.
-
-## What's Next
-
-Verify the current Google Cloud / Vertex / Gemini route for this project and connect the workflow to a live agent path only after cost behavior is confirmed.
+This is not just "Gemini answers a question." It is an operations workflow where action, cost, evidence, and approval are visible before the agent takes a risky step.
 
 ## Claim Boundary
 
-This is a local verified workflow prototype.
-
-It does not claim live Google Cloud deployment or fresh live Gemini calls in this repository yet.
+This is a local verified workflow prototype. It does not claim live Google Cloud deployment, final promotional-credit accounting, or unsupervised customer-facing action.

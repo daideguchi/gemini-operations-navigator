@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Gemini Operations Navigator architecture</title>
+  <desc id="desc">Architecture diagram showing support ticket data flowing into MCP tools, Gemini drafting, cost guardrails, and human approval.</desc>
+  <rect width="1280" height="720" fill="#f6f7fb"/>
+  <text x="70" y="76" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#1f2937">Gemini Operations Navigator</text>
+  <text x="70" y="116" font-family="Arial, sans-serif" font-size="19" fill="#566273">Gemini + MCP actions with visible cost and approval control.</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="70" y="170" width="260" height="330" rx="10" fill="#ffffff" stroke="#d8e0ea"/>
+    <text x="98" y="215" font-size="24" font-weight="700" fill="#1f2937">Inputs</text>
+    <text x="98" y="258" font-size="17" fill="#475467">support ticket</text>
+    <text x="98" y="294" font-size="17" fill="#475467">refund policy</text>
+    <text x="98" y="330" font-size="17" fill="#475467">tool catalog</text>
+    <text x="98" y="366" font-size="17" fill="#475467">cost budget</text>
+    <rect x="98" y="438" width="176" height="34" rx="17" fill="#e8f0fe"/>
+    <text x="116" y="461" font-size="15" font-weight="700" fill="#1a73e8">local case packet</text>
+    <rect x="430" y="170" width="300" height="330" rx="10" fill="#ffffff" stroke="#d8e0ea"/>
+    <text x="458" y="215" font-size="24" font-weight="700" fill="#1f2937">Agent Workflow</text>
+    <text x="458" y="258" font-size="17" fill="#475467">MCP retrieval</text>
+    <text x="458" y="294" font-size="17" fill="#475467">usage check</text>
+    <text x="458" y="330" font-size="17" fill="#475467">Gemini draft</text>
+    <text x="458" y="366" font-size="17" fill="#475467">cost ledger</text>
+    <text x="458" y="402" font-size="17" fill="#475467">approval gate</text>
+    <rect x="458" y="438" width="170" height="34" rx="17" fill="#e8f5ec"/>
+    <text x="476" y="461" font-size="15" font-weight="700" fill="#0b8043">cost-aware</text>
+    <rect x="830" y="145" width="330" height="190" rx="10" fill="#ffffff" stroke="#d8e0ea"/>
+    <text x="858" y="189" font-size="24" font-weight="700" fill="#1f2937">Allowed Output</text>
+    <text x="858" y="232" font-size="17" fill="#475467">grounded draft</text>
+    <text x="858" y="268" font-size="17" fill="#475467">tool trace</text>
+    <text x="858" y="304" font-size="17" fill="#475467">approval packet</text>
+    <rect x="830" y="405" width="330" height="190" rx="10" fill="#ffffff" stroke="#d8e0ea"/>
+    <text x="858" y="449" font-size="24" font-weight="700" fill="#1f2937">Blocked Action</text>
+    <text x="858" y="492" font-size="17" fill="#475467">customer-facing send</text>
+    <text x="858" y="528" font-size="17" fill="#475467">financial promise</text>
+    <text x="858" y="564" font-size="17" fill="#475467">unapproved escalation</text>
+    <path d="M330 335 C370 335 390 335 430 335" fill="none" stroke="#1a73e8" stroke-width="4"/>
+    <path d="M730 285 C778 255 790 230 830 222" fill="none" stroke="#1a73e8" stroke-width="4"/>
+    <path d="M730 385 C778 425 790 495 830 502" fill="none" stroke="#1a73e8" stroke-width="4"/>
+    <polygon points="425,335 407,325 407,345" fill="#1a73e8"/>
+    <polygon points="825,222 806,214 809,235" fill="#1a73e8"/>
+    <polygon points="825,502 807,489 805,511" fill="#1a73e8"/>
+    <rect x="70" y="625" width="1090" height="54" rx="8" fill="#1f2937"/>
+    <text x="98" y="659" font-size="19" fill="#ffffff">Boundary: verified local prototype; no live Google Cloud deployment or unsupervised customer action claimed.</text>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "case_id": "CASE-CLOUD-003",
+  "ticket_id": "SUP-1042",
+  "customer": "Acme Learning",
+  "question": "Can we get a refund for seats that were accidentally renewed yesterday?",
+  "risk": "Customer-facing financial answer. Needs policy citation and manager approval before sending.",
+  "expected_outcome": {
+    "answer_grounded": true,
+    "requires_human_approval": true,
+    "max_projected_cost_usd": 0.05,
+    "must_not_send_without_approval": true
+  }
+}

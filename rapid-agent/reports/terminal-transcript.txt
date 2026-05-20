@@ -1,0 +1,20 @@
+$ python3 rapid-agent/scripts/run_gemini_ops_agent.py --case CASE-CLOUD-003
+[case] CASE-CLOUD-003 / SUP-1042
+[mode] Gemini Operations Navigator: MCP tools + cost guardrails + human approval
+[budget] max=$0.05
+
+[tool] policy_mcp.retrieve_refund_policy: success
+       evidence: kb-refund-2026-05 cost=$0.001
+[tool] billing_mcp.check_recent_usage: success
+       evidence: usage-sup-1042 cost=$0.002
+       result: No new seats used after renewal in packaged case.
+[tool] gemini.generate_grounded_draft: success
+       evidence: draft-sup-1042 cost=$0.018
+       result: Draft cites refund policy and avoids promising approval.
+[tool] gmail_mcp.send_customer_reply: blocked_pending_human_approval
+       evidence: approval-gate-sup-1042 cost=$0.000
+       result: High-risk customer-facing action blocked until manager approval.
+
+[cost] projected=$0.021 within_budget=True
+[approval] customer-facing send is blocked until support manager approval
+[boundary] verified local MCP workflow; no live Google Cloud deployment claimed

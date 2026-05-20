@@ -2,49 +2,52 @@
 
 ## Tagline
 
-Gemini + MCP for support operations with human approval and visible cost guardrails.
+Gemini + MCP for support operations with visible cost guardrails, evidence-backed actions, and human approval checkpoints.
 
 ## What It Does
 
-Gemini Operations Navigator helps a support manager run an agent-guided workflow without losing control of cost, evidence, or escalation.
+Gemini Operations Navigator runs a local support-operations workflow.
 
-The prototype shows:
+A customer asks for a renewal refund. The agent retrieves the refund policy through an MCP-style policy tool, checks usage through a billing tool, drafts a grounded response, records projected cost, and blocks the customer-facing send until a manager approves it.
 
-- a Gemini agent plan
-- policy retrieval through an MCP-style tool
-- a grounded draft answer
-- a cost signal
-- a human approval checkpoint
-- a final handoff event
+Outputs:
 
-## Demo Story
-
-A support manager wants an agent that can answer customer questions and escalate uncertain cases.
-
-The agent retrieves current policy, drafts a grounded response, and then detects that high-quality model usage should be reserved for escalations. The workflow pauses at a human approval point, where the manager approves an escalation-only budget mode.
+- terminal transcript
+- MCP tool trace
+- cost ledger
+- approval checkpoint
+- workflow UI
+- architecture diagram
+- demo video
 
 ## Why It Matters
 
-Fast agents are not enough for operations. Teams need agents that can act with tools, cite evidence, and stay inside budget boundaries.
+AI agents become risky when tool calls, spend, evidence, and customer-facing actions are hidden.
 
-This project treats cost control and human approval as first-class workflow features rather than hidden implementation details.
+This project treats cost and approval as product features. The agent can help, but it must show what it used, how much it costs, and where a human needs to decide.
 
 ## Built With
 
-- Shared AgentOps event stream
-- Gemini/MCP workflow specification
-- Local HTML demo artifact
-- Cost guardrail policy JSON
+- Python
+- HTML/CSS
+- JSON / JSONL
+- MCP-style tool model
+- ImageMagick
+- ffmpeg
+- Edge TTS neural narration
 
-Current local artifacts:
+## Verification Output
 
-- `prototype/gemini-operations-navigator.html`
-- `media/gemini-operations-navigator-full.png`
-- `reports/cost-guardrail-policy.json`
-- `../shared-agentops-engine/adapters/google/gemini_mcp_workflow.json`
+```text
+google_local_checks_ok
+mcp_tool_calls=4
+projected_cost_usd=0.021
+cost_within_budget=True
+human_approval_required=true
+video_seconds=72.8
+claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
+```
 
 ## Claim Boundary
 
-This is currently a local workflow prototype generated from the shared event stream.
-
-Do not claim live Google Cloud deployment or new live Gemini calls until the billing/credit route is verified for the current project.
+This is a verified local workflow prototype. It does not claim live Google Cloud deployment, final promotional-credit accounting, or unsupervised customer-facing action.
