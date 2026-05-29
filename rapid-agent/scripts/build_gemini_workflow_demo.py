@@ -460,15 +460,17 @@ def write_policy(workflow: dict[str, Any]) -> None:
     policy = {
         "product": workflow["name"],
         "case_id": workflow["case_id"],
-        "billing_boundary": "local_demo_only_no_new_api_call",
-        "current_auth_cache_summary": "Vertex AI route was previously verified in ops/.ai_auth_cache.json, but promotional-credit deduction must still be confirmed before paid-looking usage is expanded.",
+        "billing_boundary": "local_demo_only_no_new_api_call_no_out_of_pocket_spend",
+        "current_auth_cache_summary": "Vertex AI route was previously verified in ops/.ai_auth_cache.json, but the $100 Google Cloud Rapid Agent hackathon credit pool is exhausted and promotional-credit deduction must not be assumed.",
         "rules": [
             "Use low-cost model/tool path for routine retrieval and drafting.",
             "Reserve expensive model calls for human-approved escalations only.",
             "Stop or downgrade when projected monthly spend exceeds prototype budget.",
             "Never click Google AI Studio prepay, buy credits, auto-reload, or payment confirmation without DD approval.",
+            "Do not assume a $100 Google Cloud hackathon credit code will arrive; use only free/no-out-of-pocket routes.",
         ],
         "evidence": workflow["risk_events"] + workflow["human_control_points"],
+        "credit_update_2026_05_30": "Devpost said the hackathon-issued $100 Google Cloud credit code pool is exhausted; standard Google Cloud free trial remains a supported eligibility path.",
     }
     POLICY_FILE.parent.mkdir(parents=True, exist_ok=True)
     POLICY_FILE.write_text(json.dumps(policy, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

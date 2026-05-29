@@ -12,6 +12,12 @@ Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 
 Devpost field copy: [rapid-agent/submission/devpost-submit-manual.md](rapid-agent/submission/devpost-submit-manual.md)
 
+## Credit And Cost Boundary
+
+Devpost sent an update on 2026-05-30 JST saying the hackathon-issued `$100 Google Cloud credit codes` for Google Cloud Rapid Agent Hackathon are no longer available because the pool was exhausted. The standard Google Cloud free trial remains a supported submission path.
+
+This project must therefore stay on no-out-of-pocket routes only. Do not assume a `$100` hackathon credit code will arrive, and do not use paid upgrades, prepay credits, auto-reload, or payment confirmation flows.
+
 ## Judge Quick Read
 
 **Who is this for?** Support operations teams that want AI agents to help with customer-facing work.
