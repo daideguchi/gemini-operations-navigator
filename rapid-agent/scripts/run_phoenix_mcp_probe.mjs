@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(__filename), "..");
 const REPORT_DIR = path.join(ROOT, "reports");
 const REPORT_FILE = path.join(REPORT_DIR, "phoenix-mcp-runtime-proof.json");
-const PACKAGE_NAME = "@arizeai/phoenix-mcp@latest";
+const PACKAGE_NAME = "@arizeai/phoenix-mcp@4.0.13";
 
 function nowIso() {
   return new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -105,7 +105,7 @@ async function main() {
         name: "gemini-operations-navigator-proof",
         version: "1.0.0",
       },
-    }, 60000);
+    }, 180000);
     send({ jsonrpc: "2.0", method: "notifications/initialized", params: {} });
 
     const tools = await request("tools/list", {}, 20000);
@@ -129,7 +129,7 @@ async function main() {
               query: "Which Phoenix MCP tools should inspect traces and spans for a support operations agent?",
             },
           },
-          15000,
+          60000,
         );
         supportCall = {
           status: support.error ? "error" : "ok",

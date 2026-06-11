@@ -16,7 +16,7 @@
   },
   "partner_mcp": {
     "partner_track": "Arize",
-    "server_package": "@arizeai/phoenix-mcp@latest",
+    "server_package": "@arizeai/phoenix-mcp@4.0.13",
     "runtime_proof_report": "rapid-agent/reports/phoenix-mcp-runtime-proof.json",
     "observability_format": "OpenInference-compatible JSONL spans"
   },

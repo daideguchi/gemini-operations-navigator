@@ -1,8 +1,8 @@
 {
   "status": "ok",
-  "captured_at": "2026-06-11T05:30:06Z",
+  "captured_at": "2026-06-11T05:45:13Z",
   "partner_track": "Arize",
-  "mcp_server_package": "@arizeai/phoenix-mcp@latest",
+  "mcp_server_package": "@arizeai/phoenix-mcp@4.0.13",
   "server_info": {
     "name": "phoenix-mcp-server",
     "version": "1.1.0"
