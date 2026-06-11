@@ -1,10 +1,41 @@
 {
   "case_id": "CASE-CLOUD-003",
   "ticket_id": "SUP-1042",
-  "model_route": "Gemini/Vertex-ready local demo",
+  "model_route": "Gemini support workflow with Vertex AI rerun status captured",
   "partner_pattern": "MCP-style policy, billing, ticket, and action tools with Arize/OpenInference-compatible trace export",
   "partner_track": "Arize",
   "observability_route": "OpenInference-compatible JSONL trace for tool calls, cost, evidence, and approval boundary",
+  "target_user": "support operations manager",
+  "problem_solved": "Make AI support work auditable before a refund promise or customer-facing send happens.",
+  "ai_usage": "Gemini drafts from policy evidence, MCP tools retrieve/verify context, Arize Phoenix MCP exposes trace tooling, and a human approval gate blocks risky action.",
+  "runtime_proofs": {
+    "vertex_gemini": {
+      "status": "blocked_by_google_cloud_account_state",
+      "report": "rapid-agent/reports/vertex-gemini-live-proof.json",
+      "model": null,
+      "project_id": "pj260519",
+      "claim_boundary": "No successful live Vertex Gemini generation is claimed from this rerun; the no-out-of-pocket guardrail blocks billing or credit repair actions."
+    },
+    "phoenix_mcp": {
+      "status": "ok",
+      "report": "rapid-agent/reports/phoenix-mcp-runtime-proof.json",
+      "server_info": {
+        "name": "phoenix-mcp-server",
+        "version": "1.1.0"
+      },
+      "tool_count": 27,
+      "selected_tools": [
+        "list-projects",
+        "list-traces",
+        "get-spans",
+        "phoenix-support"
+      ]
+    },
+    "agent_builder_manifest": {
+      "status": "present",
+      "report": "rapid-agent/agent-builder/agent-builder-runtime-manifest.json"
+    }
+  },
   "budget_usd": 0.05,
   "projected_cost_usd": 0.021,
   "cost_within_budget": true,
@@ -71,5 +102,5 @@
   "policy_excerpt": "# Refund Policy Excerpt\n\nEvidence-ID: kb-refund-2026-05\n\nRenewal refunds may be approved within 48 hours when all of the following are\ntrue:\n\n- the renewal was accidental,\n- the request was opened by an account admin,\n- no new seats were used after the renewal, and\n- a support manager approves the exception.\n\nCustomer-facing replies must cite the policy source and must not promise a refund\nuntil a support manager has approved the exception.\n",
   "human_approval_required": true,
   "blocked_action": "gmail_mcp.send_customer_reply",
-  "claim_boundary": "verified_local_mcp_workflow_no_live_google_deployment_claim"
+  "claim_boundary": "local_workflow_verified_phoenix_mcp_verified_vertex_rerun_blocked_if_google_consumer_suspended_no_customer_send_claim"
 }

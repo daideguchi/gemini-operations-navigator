@@ -1,6 +1,6 @@
 # Gemini Operations Navigator
 
-Gemini + MCP for support operations with visible cost guardrails, evidence-backed actions, and human approval checkpoints.
+Gemini + MCP for support operations managers who need evidence-backed AI drafts, visible cost guardrails, and human approval before customer-facing action.
 
 Live demo: https://daideguchi.github.io/gemini-operations-navigator/
 
@@ -20,13 +20,13 @@ This project must therefore stay on no-out-of-pocket routes only. Do not assume 
 
 ## Judge Quick Read
 
-**Who is this for?** Support operations teams that want AI agents to help with customer-facing work.
+**Who is this for?** Support operations managers handling refund and escalation queues.
 
-**What problem does it solve?** Gemini can retrieve, draft, and act, but a support agent becomes risky when tool calls, spend, evidence, and customer-facing actions are hidden.
+**What problem does it solve?** AI support agents become risky when the manager cannot see which tools were used, what evidence was cited, how much the run may cost, and whether a refund promise is about to be sent.
 
-**How does it solve it?** The workflow runs MCP-style policy, billing, and ticket tools, creates a grounded draft, records projected cost, exports an Arize/OpenInference-compatible trace, and blocks the customer reply until a human manager approves it.
+**How does it use AI?** Gemini drafts from policy evidence, MCP tools retrieve and verify context, Arize Phoenix MCP exposes trace tooling, and the workflow blocks the customer reply until a human manager approves it.
 
-**What is verified?** A local terminal run, MCP tool trace, Arize/OpenInference-compatible span trace, cost ledger, approval checkpoint, workflow UI, architecture diagram, narrated demo video, and public GitHub Pages review hub.
+**What is verified?** A terminal run, MCP tool trace, Arize/OpenInference-compatible span trace, cost ledger, approval checkpoint, Agent Builder-ready runtime manifest, actual Phoenix MCP stdio handshake, current Vertex rerun status, workflow UI, architecture diagram, narrated demo video, and public GitHub Pages review hub.
 
 ## Demo
 
@@ -66,17 +66,22 @@ cost_within_budget=True
 human_approval_required=true
 openinference_spans=4
 partner_track=Arize
-claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
+vertex_status=blocked_by_google_cloud_account_state
+phoenix_mcp_tool_count=27
+agent_builder_manifest=present
+claim_boundary=local_workflow_verified_phoenix_mcp_verified_vertex_rerun_blocked_if_google_consumer_suspended_no_customer_send_claim
 ```
 
 ## What It Shows
 
 - MCP-style tool calls for policy, usage, draft, and customer reply.
-- A grounded reply that cites evidence instead of promising a refund.
+- A grounded Gemini-style reply that cites evidence instead of promising a refund.
 - A cost ledger that keeps projected spend visible.
 - An Arize/OpenInference-compatible trace for every tool step, evidence ID, cost estimate, and approval boundary.
+- A real Phoenix MCP server launch over stdio with `initialize` and `tools/list` proof.
+- An Agent Builder-ready manifest for model, tools, MCP, budget, and approval policy.
+- A current Vertex AI rerun report. If Google Cloud reports the project consumer is suspended, the project records that stopline instead of claiming a live generation.
 - A high-risk customer-facing send blocked until manager approval.
-- A submission boundary that avoids claiming live Google Cloud deployment before verification.
 
 ## Key Files
 
@@ -86,6 +91,9 @@ claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 - `rapid-agent/reports/openinference-trace.jsonl` - Arize/OpenInference-compatible span trace.
 - `rapid-agent/reports/cost-ledger.json` - budget and projected cost.
 - `rapid-agent/reports/approval-checkpoint.md` - human approval packet.
+- `rapid-agent/reports/vertex-gemini-live-proof.json` - current Vertex AI Gemini rerun status.
+- `rapid-agent/reports/phoenix-mcp-runtime-proof.json` - actual Phoenix MCP server handshake and tool list.
+- `rapid-agent/agent-builder/agent-builder-runtime-manifest.json` - Agent Builder-ready runtime package.
 - `rapid-agent/prototype/terminal-session.html` - terminal proof page.
 - `ARCHITECTURE.md` - component and data-flow explanation.
 
@@ -93,10 +101,11 @@ claim_boundary=verified_local_mcp_workflow_no_live_google_deployment_claim
 
 Safe claim:
 
-- A local Gemini/MCP workflow prototype runs against packaged case data and produces tool trace, cost ledger, approval checkpoint, workflow UI, and natural English demo video.
+- A local Gemini/MCP workflow prototype runs against packaged case data and produces tool trace, cost ledger, approval checkpoint, workflow UI, Phoenix MCP runtime proof, Agent Builder-ready manifest, and natural English demo video.
+- The current Google Cloud Vertex rerun status is recorded in `rapid-agent/reports/vertex-gemini-live-proof.json`.
 
 Not claimed yet:
 
-- Live Google Cloud deployment.
+- Production Google Cloud deployment.
 - Final promotional-credit accounting.
 - Unsupervised customer-facing action.

@@ -15,6 +15,9 @@ WORKFLOW_FILE = SHARED_ROOT / "adapters" / "google" / "gemini_mcp_workflow.json"
 OUT_FILE = ROOT / "prototype" / "gemini-operations-navigator.html"
 POLICY_FILE = ROOT / "reports" / "cost-guardrail-policy.json"
 OPENINFERENCE_FILE = ROOT / "reports" / "openinference-trace.jsonl"
+VERTEX_PROOF_FILE = ROOT / "reports" / "vertex-gemini-live-proof.json"
+PHOENIX_PROOF_FILE = ROOT / "reports" / "phoenix-mcp-runtime-proof.json"
+AGENT_BUILDER_MANIFEST = ROOT / "agent-builder" / "agent-builder-runtime-manifest.json"
 
 
 def esc(value: Any) -> str:
@@ -94,6 +97,64 @@ def load_openinference_spans() -> list[dict[str, Any]]:
     ]
 
 
+def load_json_or_status(path: Path, status: str) -> dict[str, Any]:
+    if not path.exists():
+        return {"status": status}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def status_class(status: str) -> str:
+    if status == "ok" or status == "present":
+        return "ok"
+    if status.startswith("blocked"):
+        return "warn"
+    return "danger"
+
+
+def build_runtime_proof_cards() -> str:
+    vertex = load_json_or_status(VERTEX_PROOF_FILE, "missing")
+    phoenix = load_json_or_status(PHOENIX_PROOF_FILE, "missing")
+    manifest_status = "present" if AGENT_BUILDER_MANIFEST.exists() else "missing"
+    vertex_detail = vertex.get("model") or vertex.get("status")
+    if vertex.get("status", "").startswith("blocked"):
+        attempts = vertex.get("attempts", [])
+        vertex_detail = attempts[0].get("error_message", vertex.get("status")) if attempts else vertex.get("status")
+
+    cards = [
+        {
+            "title": "Vertex Gemini",
+            "status": vertex.get("status", "missing"),
+            "detail": vertex_detail,
+            "link": "../reports/vertex-gemini-live-proof.json",
+        },
+        {
+            "title": "Phoenix MCP",
+            "status": phoenix.get("status", "missing"),
+            "detail": f"{phoenix.get('tool_count', 0)} tools exposed by {phoenix.get('server_info', {}).get('name', 'server')}",
+            "link": "../reports/phoenix-mcp-runtime-proof.json",
+        },
+        {
+            "title": "Agent Builder",
+            "status": manifest_status,
+            "detail": "Deployment-ready manifest for model, MCP, tools, budget, and approval policy.",
+            "link": "../agent-builder/agent-builder-runtime-manifest.json",
+        },
+    ]
+    return "\n".join(
+        f"""
+        <article class="proof-card">
+          <div>
+            <strong>{esc(card["title"])}</strong>
+            <span class="risk-pill {status_class(card["status"])}">{esc(card["status"])}</span>
+          </div>
+          <p>{esc(card["detail"])}</p>
+          <a href="{esc(card["link"])}">Open proof</a>
+        </article>
+        """.strip()
+        for card in cards
+    )
+
+
 def build_span_rows(spans: list[dict[str, Any]]) -> str:
     return "\n".join(
         f"""
@@ -119,6 +180,7 @@ def build_html(workflow: dict[str, Any]) -> str:
     event_rows = build_event_rows(events)
     cost_rows = build_cost_rows(events)
     span_rows = build_span_rows(spans)
+    proof_cards = build_runtime_proof_cards()
 
     return f"""<!doctype html>
 <html lang="en">
@@ -268,6 +330,35 @@ def build_html(workflow: dict[str, Any]) -> str:
       min-height: 162px;
     }}
 
+    .proof-grid {{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }}
+
+    .proof-card {{
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+      display: grid;
+      gap: 10px;
+      min-height: 150px;
+    }}
+
+    .proof-card div {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }}
+
+    .proof-card a {{
+      color: var(--brand);
+      font-weight: 800;
+      text-decoration: none;
+    }}
+
     .tool-name,
     .event-id {{
       font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -359,6 +450,7 @@ def build_html(workflow: dict[str, Any]) -> str:
     @media (max-width: 900px) {{
       .hero,
       .metrics,
+      .proof-grid,
       .tool-grid {{
         grid-template-columns: 1fr;
       }}
@@ -387,13 +479,13 @@ def build_html(workflow: dict[str, Any]) -> str:
       <div>
         <h1>Use Gemini for support operations without losing cost control or human control.</h1>
         <p class="hero-copy">
-          Gemini Operations Navigator is a Rapid Agent workflow that retrieves current policy through MCP,
-          drafts a grounded answer, detects projected model spend, and requires a human to approve the budget mode.
+          Built for support operations managers: Gemini drafts from policy evidence, MCP tools verify context,
+          Phoenix MCP exposes observability tools, and a human approval gate blocks refund promises before customer send.
         </p>
       </div>
       <aside class="guardrail">
-        <strong>Cost route boundary</strong>
-        <p>This demo is generated locally. Do not trigger new paid Google/API usage unless the free-credit route is explicitly verified for the current project.</p>
+        <strong>Runtime boundary</strong>
+        <p>Current Google Cloud rerun is recorded honestly. If the project is suspended, the proof says so and the workflow stays inside the no-out-of-pocket guardrail.</p>
       </aside>
     </section>
 
@@ -403,6 +495,12 @@ def build_html(workflow: dict[str, Any]) -> str:
       <div class="metric"><strong>{len(spans)}</strong><span>Arize/OpenInference spans</span></div>
       <div class="metric"><strong>{risk_count}</strong><span>cost/risk guardrail event</span></div>
       <div class="metric"><strong>${total_cost:.2f}</strong><span>sample estimated spend</span></div>
+    </section>
+
+    <section class="section">
+      <h2>Runtime Proof</h2>
+      <p>These files are generated by <span class="event-id">run_google_local_checks.sh</span> so the submission claim matches the current runtime state.</p>
+      <div class="proof-grid">{proof_cards}</div>
     </section>
 
     <section class="section">

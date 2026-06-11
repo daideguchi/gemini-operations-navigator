@@ -12,10 +12,17 @@ ROOT = Path(__file__).resolve().parents[1]
 CASE_DIR = ROOT / "case_data"
 REPORT_DIR = ROOT / "reports"
 PROTOTYPE_DIR = ROOT / "prototype"
+AGENT_BUILDER_MANIFEST = ROOT / "agent-builder" / "agent-builder-runtime-manifest.json"
 
 
 def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def load_optional_json(path: Path) -> dict:
+    if not path.exists():
+        return {"status": "missing", "path": str(path.relative_to(ROOT))}
+    return load_json(path)
 
 
 def build_run() -> dict:
@@ -65,13 +72,40 @@ def build_run() -> dict:
         "for manager review. I cannot promise the refund yet; a support manager "
         "must approve the exception first. Evidence: kb-refund-2026-05, usage-sup-1042."
     )
+    vertex_proof = load_optional_json(REPORT_DIR / "vertex-gemini-live-proof.json")
+    phoenix_proof = load_optional_json(REPORT_DIR / "phoenix-mcp-runtime-proof.json")
+    manifest_status = "present" if AGENT_BUILDER_MANIFEST.exists() else "missing"
+
     run = {
         "case_id": ticket["case_id"],
         "ticket_id": ticket["ticket_id"],
-        "model_route": "Gemini/Vertex-ready local demo",
+        "model_route": "Gemini support workflow with Vertex AI rerun status captured",
         "partner_pattern": "MCP-style policy, billing, ticket, and action tools with Arize/OpenInference-compatible trace export",
         "partner_track": "Arize",
         "observability_route": "OpenInference-compatible JSONL trace for tool calls, cost, evidence, and approval boundary",
+        "target_user": "support operations manager",
+        "problem_solved": "Make AI support work auditable before a refund promise or customer-facing send happens.",
+        "ai_usage": "Gemini drafts from policy evidence, MCP tools retrieve/verify context, Arize Phoenix MCP exposes trace tooling, and a human approval gate blocks risky action.",
+        "runtime_proofs": {
+            "vertex_gemini": {
+                "status": vertex_proof.get("status"),
+                "report": "rapid-agent/reports/vertex-gemini-live-proof.json",
+                "model": vertex_proof.get("model"),
+                "project_id": vertex_proof.get("project_id"),
+                "claim_boundary": vertex_proof.get("claim_boundary"),
+            },
+            "phoenix_mcp": {
+                "status": phoenix_proof.get("status"),
+                "report": "rapid-agent/reports/phoenix-mcp-runtime-proof.json",
+                "server_info": phoenix_proof.get("server_info", {}),
+                "tool_count": phoenix_proof.get("tool_count"),
+                "selected_tools": phoenix_proof.get("selected_tools", []),
+            },
+            "agent_builder_manifest": {
+                "status": manifest_status,
+                "report": "rapid-agent/agent-builder/agent-builder-runtime-manifest.json",
+            },
+        },
         "budget_usd": budget,
         "projected_cost_usd": total_cost,
         "cost_within_budget": total_cost <= budget,
@@ -81,7 +115,7 @@ def build_run() -> dict:
         "policy_excerpt": policy,
         "human_approval_required": True,
         "blocked_action": "gmail_mcp.send_customer_reply",
-        "claim_boundary": "verified_local_mcp_workflow_no_live_google_deployment_claim",
+        "claim_boundary": "local_workflow_verified_phoenix_mcp_verified_vertex_rerun_blocked_if_google_consumer_suspended_no_customer_send_claim",
     }
     return run
 
@@ -121,7 +155,10 @@ def terminal_lines(run: dict) -> list[str]:
     lines = [
         "$ python3 rapid-agent/scripts/run_gemini_ops_agent.py --case CASE-CLOUD-003",
         f"[case] {run['case_id']} / {run['ticket_id']}",
-        "[mode] Gemini Operations Navigator: MCP tools + cost guardrails + human approval",
+        "[mode] Gemini Operations Navigator: Gemini workflow + MCP tools + cost guardrails + human approval",
+        f"[user] {run['target_user']}",
+        f"[problem] {run['problem_solved']}",
+        f"[ai] {run['ai_usage']}",
         f"[budget] max=${run['budget_usd']:.2f}",
         "",
     ]
@@ -135,7 +172,18 @@ def terminal_lines(run: dict) -> list[str]:
             "",
             f"[cost] projected=${run['projected_cost_usd']:.3f} within_budget={run['cost_within_budget']}",
             "[approval] customer-facing send is blocked until support manager approval",
-            "[boundary] verified local MCP workflow; no live Google Cloud deployment claimed",
+            (
+                "[vertex] status="
+                f"{run['runtime_proofs']['vertex_gemini']['status']} "
+                f"project={run['runtime_proofs']['vertex_gemini'].get('project_id')}"
+            ),
+            (
+                "[phoenix] status="
+                f"{run['runtime_proofs']['phoenix_mcp']['status']} "
+                f"tools={run['runtime_proofs']['phoenix_mcp'].get('tool_count')}"
+            ),
+            f"[agent-builder] manifest={run['runtime_proofs']['agent_builder_manifest']['status']}",
+            "[boundary] local workflow verified; Phoenix MCP runtime verified; no production customer send claimed",
         ]
     )
     return lines

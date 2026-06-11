@@ -2,11 +2,11 @@
 
 Target: Google Cloud Rapid Agent Hackathon
 
-Status: P2 submission-ready local package. Final Devpost submit has not been clicked.
+Status: submission package with runtime proof files. Devpost fields should be re-saved after the latest proof update.
 
 ## Product Thesis
 
-Gemini agents can be powerful when they use tools, but operational trust comes from visible tool calls, cost guardrails, evidence, and human approval.
+Gemini agents can be powerful when they use tools, but support operations managers need visible tool calls, cost guardrails, evidence, observability, and human approval before a refund reply reaches a customer.
 
 ## Current Local Proof
 
@@ -18,6 +18,9 @@ Gemini agents can be powerful when they use tools, but operational trust comes f
 - Tool trace: `reports/mcp-tool-trace.jsonl`
 - Cost ledger: `reports/cost-ledger.json`
 - Approval checkpoint: `reports/approval-checkpoint.md`
+- Vertex rerun status: `reports/vertex-gemini-live-proof.json`
+- Phoenix MCP proof: `reports/phoenix-mcp-runtime-proof.json`
+- Agent Builder manifest: `agent-builder/agent-builder-runtime-manifest.json`
 - Demo video: `media/gemini-operations-navigator-demo.mp4`
 
 ## Run
@@ -35,16 +38,20 @@ mcp_tool_calls=4
 projected_cost_usd=0.021
 cost_within_budget=True
 human_approval_required=true
+vertex_status=blocked_by_google_cloud_account_state
+phoenix_mcp_tool_count=27
+agent_builder_manifest=present
 ```
 
 ## Boundary
 
 Safe claim:
 
-- A terminal-executable local Gemini/MCP workflow produces tool trace, cost ledger, approval checkpoint, workflow UI, and natural English demo video.
+- A terminal-executable Gemini/MCP workflow produces tool trace, cost ledger, approval checkpoint, workflow UI, Phoenix MCP runtime proof, Agent Builder-ready manifest, and natural English demo video.
+- The current Vertex rerun status is recorded truthfully.
 
 Do not claim:
 
-- Live Google Cloud deployment.
+- Production Google Cloud deployment.
 - Final promotional-credit accounting.
 - Unsupervised customer-facing action.

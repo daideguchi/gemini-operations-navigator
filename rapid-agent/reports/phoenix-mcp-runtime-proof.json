@@ -1,0 +1,46 @@
+{
+  "status": "ok",
+  "captured_at": "2026-06-11T04:27:17Z",
+  "partner_track": "Arize",
+  "mcp_server_package": "@arizeai/phoenix-mcp@latest",
+  "server_info": {
+    "name": "phoenix-mcp-server",
+    "version": "1.1.0"
+  },
+  "protocol_version": "2024-11-05",
+  "tool_count": 27,
+  "selected_tools": [
+    "list-projects",
+    "list-traces",
+    "get-spans",
+    "phoenix-support"
+  ],
+  "tool_sample": [
+    "list-prompts",
+    "get-prompt",
+    "get-latest-prompt",
+    "get-prompt-by-identifier",
+    "get-prompt-version",
+    "upsert-prompt",
+    "list-prompt-versions",
+    "get-prompt-version-by-tag",
+    "list-prompt-version-tags",
+    "add-prompt-version-tag",
+    "list-experiments-for-dataset",
+    "get-experiment-by-id",
+    "list-datasets",
+    "get-dataset",
+    "get-dataset-examples",
+    "get-dataset-experiments",
+    "add-dataset-examples",
+    "list-projects"
+  ],
+  "support_call": {
+    "status": "ok",
+    "error": null,
+    "content_excerpt": "{\"content\":[{\"type\":\"text\",\"text\":\"{\\\"data_sources\\\":[{\\\"content\\\":\\\"https://arize.com/docs/phoenix/integrations/phoenix-mcp-server\\\\n\\\\nMCP Servers - Phoenix Skip to main content    Registration is open for Arize:Observe 2026 Phoenix home page  Search... ⌘ K  Ask Assistant Phoenix Cloud  Phoenix Cloud    Search...  Navigation Coding Agents MCP Servers Documentation Integrations SDK & API Reference Self-Hosting Phoenix Cloud Cookbooks Release Notes     What is Arize Phoenix? Get Started Quick St"
+  },
+  "non_json_stdout_lines": [],
+  "stderr_excerpt": "Phoenix MCP Server running on stdio",
+  "claim_boundary": "An actual Arize Phoenix MCP server process launched over stdio and answered JSON-RPC initialize/tools.list for this runtime proof."
+}

@@ -1,0 +1,35 @@
+{
+  "attempts": [
+    {
+      "error_code": 403,
+      "error_message": "Permission denied: Consumer 'projects/pj260519' has been suspended.",
+      "error_status": "PERMISSION_DENIED",
+      "has_text": false,
+      "http_status": 403,
+      "model": "gemini-2.5-flash"
+    },
+    {
+      "error_code": 403,
+      "error_message": "Permission denied: Consumer 'projects/pj260519' has been suspended.",
+      "error_status": "PERMISSION_DENIED",
+      "has_text": false,
+      "http_status": 403,
+      "model": "gemini-2.0-flash-001"
+    },
+    {
+      "error_code": 403,
+      "error_message": "Permission denied: Consumer 'projects/pj260519' has been suspended.",
+      "error_status": "PERMISSION_DENIED",
+      "has_text": false,
+      "http_status": 403,
+      "model": "gemini-1.5-flash-002"
+    }
+  ],
+  "captured_at": "2026-06-11T04:27:07+00:00",
+  "claim_boundary": "No successful live Vertex Gemini generation is claimed from this rerun; the no-out-of-pocket guardrail blocks billing or credit repair actions.",
+  "location": "us-central1",
+  "project_id": "pj260519",
+  "provider": "Google Cloud Vertex AI",
+  "secret_policy": "No service account JSON, OAuth token, API key, or raw credential is written to this report.",
+  "status": "blocked_by_google_cloud_account_state"
+}

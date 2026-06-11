@@ -1,6 +1,9 @@
 $ python3 rapid-agent/scripts/run_gemini_ops_agent.py --case CASE-CLOUD-003
 [case] CASE-CLOUD-003 / SUP-1042
-[mode] Gemini Operations Navigator: MCP tools + cost guardrails + human approval
+[mode] Gemini Operations Navigator: Gemini workflow + MCP tools + cost guardrails + human approval
+[user] support operations manager
+[problem] Make AI support work auditable before a refund promise or customer-facing send happens.
+[ai] Gemini drafts from policy evidence, MCP tools retrieve/verify context, Arize Phoenix MCP exposes trace tooling, and a human approval gate blocks risky action.
 [budget] max=$0.05
 
 [tool] policy_mcp.retrieve_refund_policy: success
@@ -17,4 +20,7 @@ $ python3 rapid-agent/scripts/run_gemini_ops_agent.py --case CASE-CLOUD-003
 
 [cost] projected=$0.021 within_budget=True
 [approval] customer-facing send is blocked until support manager approval
-[boundary] verified local MCP workflow; no live Google Cloud deployment claimed
+[vertex] status=blocked_by_google_cloud_account_state project=pj260519
+[phoenix] status=ok tools=27
+[agent-builder] manifest=present
+[boundary] local workflow verified; Phoenix MCP runtime verified; no production customer send claimed

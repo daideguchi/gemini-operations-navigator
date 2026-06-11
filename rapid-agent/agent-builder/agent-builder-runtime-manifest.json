@@ -1,0 +1,73 @@
+{
+  "schema_version": "2026-06-11",
+  "project_name": "Gemini Operations Navigator",
+  "target": "Google Cloud Rapid Agent Hackathon",
+  "intended_runtime": "Google Cloud Agent Builder or Vertex AI Agent Engine deployment package",
+  "audience": {
+    "primary_user": "support operations manager",
+    "problem": "Customer-facing AI support agents are risky when tool calls, evidence, spend, and approval boundaries are hidden.",
+    "outcome": "The manager can inspect evidence, cost, traces, and the approval gate before any customer-facing refund reply is sent."
+  },
+  "model": {
+    "provider": "Google Cloud Vertex AI",
+    "model": "gemini-2.5-flash",
+    "live_proof_report": "rapid-agent/reports/vertex-gemini-live-proof.json",
+    "purpose": "Generate a grounded support draft and explain why manager approval is required."
+  },
+  "partner_mcp": {
+    "partner_track": "Arize",
+    "server_package": "@arizeai/phoenix-mcp@latest",
+    "runtime_proof_report": "rapid-agent/reports/phoenix-mcp-runtime-proof.json",
+    "observability_format": "OpenInference-compatible JSONL spans"
+  },
+  "workflow_tools": [
+    {
+      "name": "policy_mcp.retrieve_refund_policy",
+      "purpose": "Retrieve refund-policy evidence for the case."
+    },
+    {
+      "name": "billing_mcp.check_recent_usage",
+      "purpose": "Check whether usage after renewal blocks a refund path."
+    },
+    {
+      "name": "gemini.generate_grounded_draft",
+      "purpose": "Draft a customer-safe response grounded in evidence."
+    },
+    {
+      "name": "gmail_mcp.send_customer_reply",
+      "purpose": "Customer-facing action that remains blocked until human approval."
+    }
+  ],
+  "guardrails": {
+    "prototype_budget_usd": 0.05,
+    "human_approval_required_for": [
+      "customer-facing financial answer",
+      "refund promise",
+      "external email send"
+    ],
+    "blocked_action": "gmail_mcp.send_customer_reply",
+    "no_out_of_pocket_policy": "Do not buy credits, enable prepay, enable auto-reload, or confirm paid upgrades for the hackathon proof."
+  },
+  "verified_artifacts": [
+    "rapid-agent/reports/agent-run.json",
+    "rapid-agent/reports/mcp-tool-trace.jsonl",
+    "rapid-agent/reports/openinference-trace.jsonl",
+    "rapid-agent/reports/cost-ledger.json",
+    "rapid-agent/reports/approval-checkpoint.md",
+    "rapid-agent/prototype/gemini-operations-navigator.html",
+    "rapid-agent/prototype/terminal-session.html",
+    "rapid-agent/media/gemini-operations-navigator-demo.mp4"
+  ],
+  "claim_boundary": {
+    "verified": [
+      "Live Vertex AI Gemini generateContent smoke proof",
+      "Actual Arize Phoenix MCP stdio initialize/tools.list proof",
+      "Local support-operations agent workflow with trace, cost, evidence, and approval gate"
+    ],
+    "not_claimed": [
+      "Production customer-email send",
+      "Unsupervised refund approval",
+      "Paid-credit or promotional-credit availability"
+    ]
+  }
+}
