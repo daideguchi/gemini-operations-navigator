@@ -25,7 +25,7 @@
       "model": "gemini-1.5-flash-002"
     }
   ],
-  "captured_at": "2026-06-11T04:27:07+00:00",
+  "captured_at": "2026-06-11T05:29:58+00:00",
   "claim_boundary": "No successful live Vertex Gemini generation is claimed from this rerun; the no-out-of-pocket guardrail blocks billing or credit repair actions.",
   "location": "us-central1",
   "project_id": "pj260519",

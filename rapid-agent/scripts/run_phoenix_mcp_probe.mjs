@@ -105,7 +105,7 @@ async function main() {
         name: "gemini-operations-navigator-proof",
         version: "1.0.0",
       },
-    });
+    }, 60000);
     send({ jsonrpc: "2.0", method: "notifications/initialized", params: {} });
 
     const tools = await request("tools/list", {}, 20000);
